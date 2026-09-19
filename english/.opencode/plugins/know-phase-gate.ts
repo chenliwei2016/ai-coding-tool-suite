@@ -29,8 +29,9 @@ const REQUIRED = [
 ];
 
 function isDesignCommand(s: string): boolean {
-  if (!s) return false;
-  return NEXT_PHASE.some((k) => s.toLowerCase() === "/" + k || s.toLowerCase() === k || s.includes("/" + k));
+  const t = (s || "").toLowerCase().trim();
+  if (!t) return false;
+  return NEXT_PHASE.some((k) => t === "/" + k || t === k || t.includes("/" + k));
 }
 
 function frontmatter(path: string): Record<string, string> | null {
