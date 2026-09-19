@@ -1,13 +1,13 @@
 ---
-description: "Sync changed bilingual files into the other language tree. Inspects chinese/ vs english/ changes and asks which files to translate and in which direction."
+description: "Sync changed bilingual files into the other language tree. Auto-detects which side changed, derives the direction, and asks you to confirm before translating."
 agent: build
 ---
 
-You are syncing this repo's bilingual mirror. The repo ships every artifact under BOTH
-`chinese/` and `english/`; the two trees must stay in sync. `$ARGUMENTS` may carry a hint
-like `/sync-translation chinese->english` or `/sync-translation all`.
+You are syncing this repo's bilingual mirror. Every artifact ships under BOTH `chinese/`
+and `english/`. `$ARGUMENTS` may carry a hint like `/sync-translation all` or
+`/sync-translation chinese->english`.
 
-## Step 1: find the changed files
+## Step 1: find changed files
 
 Run:
 
@@ -15,59 +15,53 @@ Run:
 git status --porcelain --untracked-files=all
 ```
 
-Collect every changed path that lives under `chinese/` or `english/`. Also include
-changes not yet staged:
+and also include changes not yet staged:
 
 ```bash
 git diff --name-only HEAD
 ```
 
-Merge both lists and drop duplicates.
+Merge, dedupe, and keep only paths under `chinese/` or `english/`. If none changed, say
+so and stop.
 
-## Step 2: group into language pairs
+## Step 2: derive the direction per pair
 
-For each changed path, derive its twin by swapping the leading `chinese` ⇄ `english`.
-Show the user a table with four columns: **changed path**, **twin**, **twin changed?**
-(yes/no/exists?), **asymmetry**.
+For each changed path, swap the leading `chinese` ⇄ `english` to get its twin. Determine
+the direction automatically:
 
-- if a path is changed but its twin is **not** changed -> asymmetric (the reason
-  `/sync-translation` exists).
-- if both twins are changed -> already paired; only translate if the user asks.
+- `chinese/` changed but its `english/` twin **not** changed → **chinese -> english**.
+- `english/` changed but its `chinese/` twin **not** changed → **english -> chinese**.
+- both changed → already paired; no direction needed (leave alone unless asked).
 
-## Step 3: ask what to sync
+If directions conflict across files, prefer the direction given in `$ARGUMENTS`; otherwise
+use the majority and flag the conflicts.
 
-Use the question tool to ask the user, one short batch:
+## Step 3: confirm with the user (one short question)
 
-1. **Which files to sync?** Options: all paired/asymmetric files (recommended) — or let
-   them pick a subset.
-2. **Direction (source -> target)?** Options: `chinese -> english` or `english -> chinese`
-   (recommend the direction matching which side changed), or per-file choices.
+Show a compact summary: the changed file(s), each twin, and the derived direction(s). Then
+ask a single confirmation with the question tool, e.g.:
 
-Respect an explicit direction passed via `$ARGUMENTS`.
+- "Sync N file(s) `chinese -> english` and translate the twin(s)?" → Confirm / Skip
+- (if more than one direction) include both and let them pick to confirm all or a subset.
+
+Respect an explicit direction in `$ARGUMENTS`. Do not run a long multi-part questionnaire.
 
 ## Step 4: translate and write
 
-For each selected file, in the chosen direction:
+For each file to sync, in the derived direction:
 
 - READ the full current content of the **source** language file.
-- WRITE a faithful translation into the **twin** (target) file, preserving: YAML frontmatter
-  structure, field order, the frontmatter fields that must carry across unchanged
-  (skill `name:`; agent `name:`/`mode:`/`tools:`; command `agent:`), markdown headings,
-  bullet structures, lists, code fences, and file paths.
-- Respect the trigger-keyword policy: `chinese/` front-load keywords stay BILINGUAL
-  (中文 + English); `english/` front-load keywords stay **English-only**. Do not alter the
-  target tree's keyword policy.
-- **The `english/` tree must contain zero Chinese characters.** Verify after writing.
-
-When creating both sides of a brand-new pair, create the two files together.
+- WRITE a faithful translation into the **twin**, preserving: YAML frontmatter structure,
+  field order, the fields that carry across unchanged (skill `name:`; agent
+  `name:`/`mode:`/`tools:`; command `agent:`), markdown headings, lists, code fences, paths.
+- Respect the keyword policy: `chinese/` front-load keywords stay BILINGUAL; `english/`
+  front-load keywords stay **English-only**. Do not alter the target tree's policy.
+- **`english/` must contain zero Chinese characters.** Verify after writing.
 
 ## Step 5: verify and report
-
-After writing, re-check the target tree stays clean:
 
 ```bash
 rg -l '[\u4e00-\u9fff]' english/.opencode   # expect no output
 ```
 
-Then report the synced files and direction. Summarize any files you deliberately left
-unchanged and why.
+Report the synced files and direction, and any files you left unchanged and why.

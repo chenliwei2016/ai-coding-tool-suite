@@ -10,8 +10,8 @@
  *                             若当前工程 issues.md 在开关窗口内没有登记，则直接中断。
  *
  * 开关（环境变量 QA_GATE）：
- *  - hard（默认）：真警察，issues 没登记就拦截 tool 执行
- *  - soft：只注入提醒，不拦截，不打扰日常探索
+ *  - soft（默认）：只注入提醒，不拦截，不打扰日常探索
+ *  - hard：真警察，issues 没登记就拦截 tool 执行
  *  - off：完全禁用，插件转为 no-op
  * 窗口（QA_GATE_WINDOW_MINUTES，默认 30）：issues.md 最后修改时间距今超过该值视为"未登记"。
  */
@@ -31,7 +31,7 @@ const REMINDER =
   "可运行 /report <问题描述> 一键登记并分派。登记完成前，不要讨论方案或动手改。";
 
 function mode(): "soft" | "hard" | "off" {
-  const v = (process.env.QA_GATE || "hard").toLowerCase();
+  const v = (process.env.QA_GATE || "soft").toLowerCase();
   return v === "hard" ? "hard" : v === "off" ? "off" : "soft";
 }
 
