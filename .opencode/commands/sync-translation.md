@@ -1,6 +1,5 @@
 ---
 description: "Sync changed bilingual files into the other language tree. Auto-detects which side changed, derives the direction, and asks you to confirm before translating."
-agent: build
 ---
 
 You are syncing this repo's bilingual mirror. Every artifact ships under BOTH `chinese/`
