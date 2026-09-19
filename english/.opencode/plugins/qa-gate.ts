@@ -14,8 +14,8 @@
  *                             block the call outright.
  *
  * Toggle (environment variable QA_GATE):
- *  - soft (default): only inject reminders, never block, and don't disturb daily exploration
- *  - hard: real gatekeeper, blocks tool execution when issues aren't registered
+ *  - hard (default): real gatekeeper, blocks tool execution when issues aren't registered
+ *  - soft: only inject reminders, never block, and don't disturb daily exploration
  *  - off: fully disabled; plugin becomes a no-op
  * Window (QA_GATE_WINDOW_MINUTES, default 30): if issues.md was last modified longer ago
  * than this value, it counts as "not registered."
@@ -39,7 +39,7 @@ const REMINDER =
   "or start making changes before registration is complete.";
 
 function mode(): "soft" | "hard" | "off" {
-  const v = (process.env.QA_GATE || "soft").toLowerCase();
+  const v = (process.env.QA_GATE || "hard").toLowerCase();
   return v === "hard" ? "hard" : v === "off" ? "off" : "soft";
 }
 
