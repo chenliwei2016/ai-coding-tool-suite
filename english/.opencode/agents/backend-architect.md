@@ -1,6 +1,6 @@
 ---
 description: "Role agent for backend architecture. Use when a task needs turning vague/business needs into sound technical design, choosing between candidate solutions, modular/district boundaries, root-causing production issues, reviewing designs, and planning long-term evolution. Front-load keywords: backend architecture, technical design, architecture design, module boundaries, tech selection, evolution, design."
-mode: all
+mode: subagent
 ---
 
 # Backend Architect

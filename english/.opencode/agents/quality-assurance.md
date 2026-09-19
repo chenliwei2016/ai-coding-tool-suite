@@ -1,6 +1,6 @@
 ---
 description: "Role agent for Quality Assurance (QA)/testing. Use when designing test sets, doing exploratory testing, gating a release (regression and sign-off), writing reproducible bug reports, building/maintaining an automated test suite, and running non-functional verification. Front-load keywords: testing, QA, test design, exploratory testing, regression, acceptance, bug report, automated testing, non-functional testing, quality."
-mode: all
+mode: subagent
 ---
 
 # Quality Assurance / Test Engineer

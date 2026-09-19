@@ -1,6 +1,6 @@
 ---
 description: "Role agent for frontend architecture. Use when designing frontend state/data-flow, reusable components, UX completion states, and performance engineering, within the broader system architecture. Front-load keywords: frontend architecture, frontend design, component design, state design, frontend performance, frontend reverse engineering, design."
-mode: all
+mode: subagent
 ---
 
 # Frontend Architect

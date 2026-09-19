@@ -2,6 +2,37 @@
 
 This is not an app codebase. It distributes OpenCode tooling — skills, agents, commands, a plugin — as reusable content, shipped **bilingually**. There is no runtime, no build, and no test/lint/typecheck to run.
 
+## 项目目标 (Project Goals)
+
+This repo is evolving from a catalog into a **universal AI-assisted coding framework**: the full
+enterprise development lifecycle is driven by opencode mechanisms — `agent` (who runs it),
+`skill` (how to do it), `command` (trigger a step), `plugin` (hard gate). The framework is
+delivered as reusable content (bilingual) that teams drop into their project.
+
+The target lifecycle (overview; later phases will be detailed progressively in future passes):
+
+1. **初始化 / Know Your Project** — reverse-engineer an unfamiliar or half-handover project:
+   understand the codebase, produce a defined deliverable, and pass a **self-gate + human-confirmation
+   gate** before proceeding. Roughly the on-ramp of `/init`. *(Active workstream; see below.)*
+2. **设计 (SDD)** — turn requirements into a specification; auto + human design review.
+3. **计划** — prioritize the spec into an ordered, parallelizable plan.
+4. **开发** — spec -> code; unit tests; code review.
+5. **测试** — functional (black-box), performance, security, test review; defects flow back to design.
+6. **部署 (release)** — build artifact -> version-verification env -> pre-prod review -> production.
+7. **复盘 / 评估 (retrospective)** — optional but high-yield; the Deming/reflection cycle: retain what
+   worked, fix what didn't, feed into the next loop.
+
+Each phase ships its own `skill` + (gate/`command`) + where useful an `agent`/`plugin`, so it is
+reusable and independently gateable.
+
+**Orchestration convention** (decided): the only primary agents are the built-in `plan` (plan first) and
+`build` (drive/execute). Every custom role agent is `mode: subagent` and is only invoked by `@`-mention.
+Each phase is entered via a **phase command bound to `agent: build`** (e.g. `/know-project`), whose template
+makes build orchestrate and `@`-delegate the relevant subagents. Pure tooling commands (e.g.
+`/sync-translation`) stay `agent`-independent so they run under whatever agent is active.
+Phase gates are **one plugin + one env per phase** (e.g. `know-phase-gate.ts` / `KNOW_PHASE_GATE=off`),
+never merged.
+
 ## Layout
 
 - `chinese/.opencode/` — Chinese edition. **Author-maintained source of truth.**
