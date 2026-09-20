@@ -15,11 +15,11 @@ The target lifecycle (overview; later phases will be detailed progressively in f
    understand the codebase, produce a defined deliverable, and pass a **self-gate + human-confirmation
    gate** before proceeding. Roughly the on-ramp of `/init`. *(Implemented: `/know-project` command,
    `know-your-project` skill, `know-phase-gate.ts` / `KNOW_PHASE_GATE`.)*
-2. **设计 (SDD)** — turn requirements into a specification; auto + human design review. *(Implemented:
+2. **设计 (SDD / Spec)** — turn requirements into a specification; auto + human design review. *(Implemented:
    `/design` command, `design-and-spec` skill, `design-phase-gate.ts` / `DESIGN_PHASE_GATE`. Inputs:
    `PROJECT-REVIEW.md` (from phase 1) + inline requirements gated by project-root `GATE-REQUIREMENTS.md`;
    `DESIGN.md` is the deliverable, hard-gated on `reviewed`, `requirements_sign_off`, `human_confirmed`.)*
-3. **计划** — prioritize the spec into an ordered, parallelizable plan. *(Implemented: `/plan` command,
+3. **计划 — task breakdown** — prioritize the spec into an ordered, parallelizable plan. *(Implemented: `/plan` command,
    `plan-project` skill, `plan-phase-gate.ts` / `PLAN_PHASE_GATE`; `PLAN.md` is the deliverable, hard-gated
    on `reviewed`, `human_confirmed`, with `DESIGN.md` as required input.)*
 4. **开发** — spec -> code; unit tests; code review. *(Implemented: `/dev` command, `dev-implement` skill,

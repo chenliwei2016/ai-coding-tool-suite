@@ -7,6 +7,8 @@ description: "Use when entering the design (SDD) phase: collect requirements and
 
 把**需求**转化为结构化、可落地的 `DESIGN.md` 规格，并经过**需求 sign-off + 规范机控 + 自动评审 + 人工确认**后，才允许进入「计划」阶段。输入有两个：`PROJECT-REVIEW.md`（现状）与**本次需求**（要做什么，不限定固定格式）。
 
+> **SDD 术语对齐**：本阶段的 `DESIGN.md` 即 SDD / SpecKit 所称的 **spec（规格）**——它落在"需求"与"实现"之间，是照着实现与验收的契约。**写 spec 时已含需求初切**（scope/验收标准）；下一阶段 `plan-project` 会把它**进一步细拆成可独立实现、可独立验收的 unit task**（SDD 的 task）。两个阶段都在"拆"，只是粒度从粗（scope/验收）到细（可提交的 task）。
+
 ## 适用场景（when）
 
 - 进入了「设计 / SDD」阶段（由 `/design` 触发）

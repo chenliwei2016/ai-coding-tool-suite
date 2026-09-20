@@ -27,8 +27,8 @@ complete, reviewed, and human-confirmed.
 | Phase | Command | Skill | Gate (plugin / env) | Deliverable |
 |---|---|---|---|---|
 | 1 Init / Know Your Project | `/know-project` | `know-your-project` | `know-phase-gate.ts` / `KNOW_PHASE_GATE` | `PROJECT-REVIEW.md` |
-| 2 Design (SDD) | `/design` | `design-and-spec` | `design-phase-gate.ts` / `DESIGN_PHASE_GATE` | `DESIGN.md` |
-| 3 Plan | `/plan` | `plan-project` | `plan-phase-gate.ts` / `PLAN_PHASE_GATE` | `PLAN.md` |
+| 2 Design (SDD / **Spec**) | `/design` | `design-and-spec` | `design-phase-gate.ts` / `DESIGN_PHASE_GATE` | `DESIGN.md` |
+| 3 Plan (SDD **task breakdown**) | `/plan` | `plan-project` | `plan-phase-gate.ts` / `PLAN_PHASE_GATE` | `PLAN.md` |
 | 4 Development | `/dev` | `dev-implement` | `dev-phase-gate.ts` / `DEV_PHASE_GATE` | implementation + unit tests |
 | 5 Test | `/test` | `test-project` | `test-phase-gate.ts` / `TEST_PHASE_GATE` | `TEST.md` |
 | 6 Release / Deploy | `/release` | `release-project` | `release-phase-gate.ts` / `RELEASE_PHASE_GATE` | `RELEASE.md` |
@@ -36,6 +36,9 @@ complete, reviewed, and human-confirmed.
 
 Each phase: **command → skill → gate**, outputting a frontmatter-flagged deliverable that the next phase's
 gate machine-checks. Rework caps keep loops bounded (dev item `K=3`, stage `M=20`).
+
+*SDD-aligned: `DESIGN.md` is what SDD / SpecKit call a **spec** (contract between requirements and
+implementation); `PLAN.md` further breaks it into independently implementable **unit tasks**.*
 
 ## Orchestration model
 

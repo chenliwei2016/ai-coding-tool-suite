@@ -10,6 +10,13 @@ Turn **requirements** into a structured, buildable `DESIGN.md` specification, an
 Two inputs: `PROJECT-REVIEW.md` (current state) and **this design's requirements** (what to build; no
 fixed format).
 
+> **SDD terminology alignment**: this phase's `DESIGN.md` is what SDD / SpecKit call a **spec** — the
+> contract between "requirements" and "implementation" that you build against and accept against. Writing
+> the spec already does a coarse requirements split (scope / acceptance criteria); the next phase
+> (`plan-project`) further breaks it into **independently implementable, independently acceptable unit tasks**
+> (SDD's tasks). Both phases "split", just at different grains — from coarse (scope/acceptance) to fine
+> (submittable tasks).
+
 ## When to use
 
 - You have reached the "Design / SDD" phase (triggered by `/design`)
