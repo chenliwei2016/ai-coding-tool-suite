@@ -1,5 +1,12 @@
 ---
 status: complete
+scope: yes
+option_analysis: yes
+architecture: yes
+data_model: yes
+interfaces: yes
+acceptance_criteria: yes
+non_functional: no
 ordered_batches: yes
 parallel_tracks: yes
 task_backlog: yes
@@ -9,5 +16,4 @@ reviewed: yes
 human_confirmed: true
 ---
 
-# PLAN — demo
-Complete reviewed plan.
+# SPEC — demo

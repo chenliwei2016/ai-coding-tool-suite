@@ -17,28 +17,28 @@ lifecycle — from onboarding a codebase to shipping and reflecting — into a c
 hard gates. Every phase independently gates the phase after it; nothing proceeds until the deliverable is
 complete, reviewed, and human-confirmed.
 
-## Lifecycle (7 phases, hard-gated)
+## Lifecycle (6 phases, hard-gated)
 
 ```
-/know-project → know-phase-gate → /design → design-phase-gate → /plan → plan-phase-gate
-→ /dev → dev-phase-gate → /test → test-phase-gate → /release → release-phase-gate → /retro
+/know-project → know-phase-gate → /spec → spec-phase-gate → /dev → dev-phase-gate
+→ /test → test-phase-gate → /release → release-phase-gate → /retro
 ```
 
 | Phase | Command | Skill | Gate (plugin / env) | Deliverable |
 |---|---|---|---|---|
 | 1 Init / Know Your Project | `/know-project` | `know-your-project` | `know-phase-gate.ts` / `KNOW_PHASE_GATE` | `PROJECT-REVIEW.md` |
-| 2 Design (SDD / **Spec**) | `/design` | `design-and-spec` | `design-phase-gate.ts` / `DESIGN_PHASE_GATE` | `DESIGN.md` |
-| 3 Plan (SDD **task breakdown**) | `/plan` | `plan-project` | `plan-phase-gate.ts` / `PLAN_PHASE_GATE` | `PLAN.md` |
-| 4 Development | `/dev` | `dev-implement` | `dev-phase-gate.ts` / `DEV_PHASE_GATE` | implementation + unit tests |
-| 5 Test | `/test` | `test-project` | `test-phase-gate.ts` / `TEST_PHASE_GATE` | `TEST.md` |
-| 6 Release / Deploy | `/release` | `release-project` | `release-phase-gate.ts` / `RELEASE_PHASE_GATE` | `RELEASE.md` |
-| 7 Retrospective | `/retro` | `retro-evaluate` | *(leaf — no outgoing gate)* | `RETRO.md` |
+| 2 **Spec (SDD**: clarify → spec → tasks) | `/spec` | `spec-project` | `spec-phase-gate.ts` / `SPEC_PHASE_GATE` | `SPEC.md` |
+| 3 Development | `/dev` | `dev-implement` | `dev-phase-gate.ts` / `DEV_PHASE_GATE` | implementation + unit tests |
+| 4 Test | `/test` | `test-project` | `test-phase-gate.ts` / `TEST_PHASE_GATE` | `TEST.md` |
+| 5 Release / Deploy | `/release` | `release-project` | `release-phase-gate.ts` / `RELEASE_PHASE_GATE` | `RELEASE.md` |
+| 6 Retrospective | `/retro` | `retro-evaluate` | *(leaf — no outgoing gate)* | `RETRO.md` |
 
 Each phase: **command → skill → gate**, outputting a frontmatter-flagged deliverable that the next phase's
 gate machine-checks. Rework caps keep loops bounded (dev item `K=3`, stage `M=20`).
 
-*SDD-aligned: `DESIGN.md` is what SDD / SpecKit call a **spec** (contract between requirements and
-implementation); `PLAN.md` further breaks it into independently implementable **unit tasks**.*
+*SDD-shaped: the Spec phase runs **clarify → write spec → break tasks** in one pass; `SPEC.md` is the spec
+between requirements and implementation, carrying both the design (scope/trade-offs/architecture/data/
+interfaces/acceptance/NFR) and the **unit task breakdown** that Dev executes.*
 
 ## Orchestration model
 

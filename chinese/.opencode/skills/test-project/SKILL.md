@@ -10,12 +10,12 @@ description: "Use when entering the test phase: verify implementation with funct
 ## 适用场景（when）
 
 - 进入了「测试 / Test」阶段（由 `/test` 触发）
-- 实现已交付（PLAN.md `implementation_complete: yes`）
+- 实现已交付（SPEC.md `implementation_complete: yes`）
 - 想在发布前确认功能正确、性能达标、无明显安全风险，并把缺陷交给正确环节修复
 
 ## 输入（要拿什么进来）
 
-- `PLAN.md`（实现清单）、`DESIGN.md`（验收口径）、被测代码
+- `SPEC.md`（实现清单）、`SPEC.md`（验收口径）、被测代码
 - **`GATE-REQUIREMENTS.md`（性能/安全阈值规范，泛化可配置）**——含性能基准与安全通过线；缺失则先请用户补充（沿用 GATE 前缀规范族）
 
 ## 核心步骤（流程）
@@ -24,7 +24,7 @@ description: "Use when entering the test phase: verify implementation with funct
 2. **功能测试（黑盒）**：`@quality-assurance` 用 `test-design`、`exploratory-testing`、`automated-test-suite` 做黑盒验证——拉**真实运行**的实测证据（启动服务/调用接口/跑 E2E），不只信代码。
 3. **性能测试**：`non-functional-testing` 跑基准，对照 `GATE-REQUIREMENTS.md` 的阈值（有基准数据即可，阈值为规范）。
 4. **安全测试**：`non-functional-testing` 做漏洞/渗透，对照安全通过线（**无高危漏洞/无密钥泄漏**为硬性）。
-5. **缺陷管理**：发现缺陷 → 用 `bug-report-writing` 落地缺陷单，**写进 `issues.md`**（走 QA 流程回流到 `/dev` 或 `/design`）。
+5. **缺陷管理**：发现缺陷 → 用 `bug-report-writing` 落地缺陷单，**写进 `issues.md`**（走 QA 流程回流到 `/dev` 或 `/spec`）。
 6. **测试评审**：`@quality-assurance` 复核测试覆盖、结论与缺陷清单。
 7. **产出 `TEST.md`**：frontmatter 置 `result: pass` 或 `fail`，`defects` 记录数量与去向。
 8. **人工确认**：用 `question` 汇报测试结论与缺陷；确认后置 `human_confirmed: true`。全绿 `pass` 才可进「部署」。
@@ -59,7 +59,7 @@ PLAN 实现项与验收口径。
 漏洞/渗透结果 vs 安全通过线。
 
 ## 5. 缺陷与回流 (defects)
-缺陷清单、去向（/dev 或 /design）、是否已写入 issues.md。
+缺陷清单、去向（/dev 或 /spec）、是否已写入 issues.md。
 
 ## 6. 测试评审
 @quality-assurance 对覆盖与结论的复核。

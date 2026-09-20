@@ -19,7 +19,7 @@ state, and keeps the sign-offs, producing `RELEASE.md`.
 
 ## Input (what to bring in)
 
-- `TEST.md` (`result: pass`), `DESIGN.md`, `PLAN.md`
+- `TEST.md` (`result: pass`), `SPEC.md`, `SPEC.md`
 - **`RELEASE-PLAN.md`** (project root, declarative release plan, part of the `GATE-*`/`RELEASE-*` spec
   family): what each segment does / its commands / verification points. **Project-defined; leave blank if
   not decided, and let the skill guide you to fill per project**

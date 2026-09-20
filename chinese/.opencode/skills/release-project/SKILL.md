@@ -15,7 +15,7 @@ description: "Use when entering the release/deploy phase: build, verify in a ver
 
 ## 输入（要拿什么进来）
 
-- `TEST.md`（`result: pass`）、`DESIGN.md`、`PLAN.md`
+- `TEST.md`（`result: pass`）、`SPEC.md`、`SPEC.md`
 - **`RELEASE-PLAN.md`**（工程根，声明化部署计划，`GATE-*`/`RELEASE-*` 规范族）：四段各做什么/命令/验证点。**项目自定；未定先留白，由 skill 引导你按项目补**
 
 ## 核心步骤（流程）

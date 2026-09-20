@@ -9,34 +9,32 @@ enterprise development lifecycle is driven by opencode mechanisms — `agent` (w
 `skill` (how to do it), `command` (trigger a step), `plugin` (hard gate). The framework is
 delivered as reusable content (bilingual) that teams drop into their project.
 
-The target lifecycle (overview; later phases will be detailed progressively in future passes):
+The lifecycle (**6 phases**; aligned with SDD/SpecKit — Spec is one phase: clarify → spec → task breakdown):
 
 1. **初始化 / Know Your Project** — reverse-engineer an unfamiliar or half-handover project:
    understand the codebase, produce a defined deliverable, and pass a **self-gate + human-confirmation
    gate** before proceeding. Roughly the on-ramp of `/init`. *(Implemented: `/know-project` command,
    `know-your-project` skill, `know-phase-gate.ts` / `KNOW_PHASE_GATE`.)*
-2. **设计 (SDD / Spec)** — turn requirements into a specification; auto + human design review. *(Implemented:
-   `/design` command, `design-and-spec` skill, `design-phase-gate.ts` / `DESIGN_PHASE_GATE`. Inputs:
-   `PROJECT-REVIEW.md` (from phase 1) + inline requirements gated by project-root `GATE-REQUIREMENTS.md`;
-   `DESIGN.md` is the deliverable, hard-gated on `reviewed`, `requirements_sign_off`, `human_confirmed`.)*
-3. **计划 — task breakdown** — prioritize the spec into an ordered, parallelizable plan. *(Implemented: `/plan` command,
-   `plan-project` skill, `plan-phase-gate.ts` / `PLAN_PHASE_GATE`; `PLAN.md` is the deliverable, hard-gated
-   on `reviewed`, `human_confirmed`, with `DESIGN.md` as required input.)*
-4. **开发** — spec -> code; unit tests; code review. *(Implemented: `/dev` command, `dev-implement` skill,
-   `dev-phase-gate.ts` / `DEV_PHASE_GATE`. Executes PLAN.md work items iteratively and writes status back
-   into PLAN.md; hard-gated on `implementation_complete`, `tests_written`, `human_confirmed`. Self-review
+2. **规格 (Spec / SDD)** — turn requirements into a spec: **clarify → write spec → break into unit tasks**;
+   auto + human single confirmation. *(Implemented: `/spec` command, `spec-project` skill,
+   `spec-phase-gate.ts` / `SPEC_PHASE_GATE`. Inputs: `PROJECT-REVIEW.md` (phase 1) + inline requirements
+   gated by project-root `GATE-REQUIREMENTS.md`. `SPEC.md` is the deliverable — 8 design fields + 5
+   task-breakdown fields — hard-gated on all required fields, `reviewed`, `human_confirmed`.)*
+3. **开发** — spec -> code; unit tests; code review. *(Implemented: `/dev` command, `dev-implement` skill,
+   `dev-phase-gate.ts` / `DEV_PHASE_GATE`. Executes `SPEC.md` work items iteratively and writes status back
+   into `SPEC.md`; hard-gated on `implementation_complete`, `tests_written`, `human_confirmed`. Self-review
    here; real QA belongs to the Test phase. Rework caps: item K=3, stage M=20.)*
-5. **测试** — functional (black-box), performance, security, test review; defects flow back to design.
+4. **测试** — functional (black-box), performance, security, test review; defects flow back to spec.
    *(Implemented: `/test` command, `test-project` skill, `test-phase-gate.ts` / `TEST_PHASE_GATE`.
    `TEST.md` is the deliverable (`result: pass`), hard-gated on `functional`/`performance`/`security`/
    `reviewed`/`human_confirmed`. Thresholds reference the project-root `GATE-REQUIREMENTS.md`; defects flow
    into `issues.md`.)*
-6. **部署 (release)** — build artifact -> version-verification env -> pre-prod review -> production.
+5. **部署 (release)** — build artifact -> version-verification env -> pre-prod review -> production.
    *(Implemented: `/release` command, `release-project` skill, `release-phase-gate.ts` / `RELEASE_PHASE_GATE`.
    `RELEASE.md` is the deliverable (deployed state), hard-gated on `artifact`/`verified`/`prereviewed`/
    `deployed`/`human_confirmed`. The four segments are **declarative** — concrete build/verify/deploy
    commands come from the project-root `RELEASE-PLAN.md`, never hard-coded.)*
-7. **复盘 / 评估 (retrospective)** — optional but high-yield; the Deming/reflection cycle: retain what
+6. **复盘 / 评估 (retrospective)** — optional but high-yield; the Deming/reflection cycle: retain what
    worked, fix what didn't, feed into the next loop. *(Implemented: `/retro` command, `retro-evaluate`
    skill. `RETRO.md` is a **quantified metrics dashboard** per phase (code adoption rate, rework rate,
    defect escape, cycle time, ...) with keep/improve feeding the next loop. Leaf node — no outgoing gate.)*

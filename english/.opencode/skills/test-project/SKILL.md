@@ -12,13 +12,13 @@ human confirmation is required before entering the **Deploy** phase.
 ## When to use
 
 - You have reached the "Test" phase (triggered by `/test`)
-- Implementation is delivered (PLAN.md `implementation_complete: yes`)
+- Implementation is delivered (SPEC.md `implementation_complete: yes`)
 - You want to confirm correctness, acceptable performance, and no obvious security risk before release,
   and route defects to the right place
 
 ## Input (what to bring in)
 
-- `PLAN.md` (implementation list), `DESIGN.md` (acceptance criteria), the code under test
+- `SPEC.md` (implementation list), `SPEC.md` (acceptance criteria), the code under test
 - **`GATE-REQUIREMENTS.md` (configurable performance/security thresholds)** — performance baseline and
   security pass line; ask the user to add it if missing (part of the GATE-prefixed spec family)
 
@@ -34,7 +34,7 @@ human confirmation is required before entering the **Deploy** phase.
 4. **Security**: `non-functional-testing` finds vulnerabilities/perimeter weaknesses against the security pass
    line (**no critical vulns / no secret leak** is hard).
 5. **Defect management**: for found defects, file them with `bug-report-writing` and **write them into
-   `issues.md`** (QA flow back to `/dev` or `/design`).
+   `issues.md`** (QA flow back to `/dev` or `/spec`).
 6. **Test review**: `@quality-assurance` reviews coverage, conclusions, and the defect list.
 7. **Produce `TEST.md`**: frontmatter `result: pass` or `fail`, `defects` records count and destination.
 8. **Human confirmation**: use the `question` tool to report results & defects; on confirmation set
@@ -70,7 +70,7 @@ Baseline data vs GATE-REQUIREMENTS thresholds.
 Vulnerability/perimeter results vs the security pass line.
 
 ## 5. Defects & backflow
-Defect list, destinations (/dev or /design), whether written into issues.md.
+Defect list, destinations (/dev or /spec), whether written into issues.md.
 
 ## 6. Test review
 @quality-assurance review of coverage and conclusions.

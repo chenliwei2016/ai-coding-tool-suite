@@ -1,6 +1,6 @@
 ---
 name: know-your-project
-description: "Use when initializing a project (init / onboarding / know your project): reverse-engineer an unfamiliar or half-handover codebase, produce the PROJECT-REVIEW.md deliverable, and pass the self + human-confirmation gates before moving to the design phase. Front-load keywords: project onboarding, know your project, reverse engineer, init, understand the codebase."
+description: "Use when initializing a project (init / onboarding / know your project): reverse-engineer an unfamiliar or half-handover codebase, produce the PROJECT-REVIEW.md deliverable, and pass the self + human-confirmation gates before moving to the spec phase. Front-load keywords: project onboarding, know your project, reverse engineer, init, understand the codebase."
 ---
 
 # Know Your Project (Init)

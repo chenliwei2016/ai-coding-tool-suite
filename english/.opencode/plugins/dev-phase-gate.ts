@@ -2,10 +2,10 @@
  * dev-phase-gate — gate plugin for the Dev/Implement phase
  *
  * Purpose: before proceeding to the "Test" phase, require the implementation to be complete.
- * Validates the project-root PLAN.md (whose frontmatter records implementation-complete state).
+ * Validates the project-root SPEC.md (whose frontmatter records implementation-complete state).
  *
  * Hard conditions (command.execute.before intercepts /test):
- *   - PLAN.md exists and status == complete
+ *   - SPEC.md exists and status == complete
  *   - implementation_complete == yes (all work items done)
  *   - tests_written == yes (each item linked to unit tests)
  *   - human_confirmed == true (implementation confirmed by a human)
@@ -45,7 +45,7 @@ function complain(path: string | null, reason: string): never {
   throw new Error(
     `[dev-phase-gate] blocked: cannot proceed to the test phase. ${reason}\n` +
       (path ? `  expected ${path} ` : "") +
-      `Run /dev to finish implementing PLAN.md work items (implement + tests + self review) and get human confirmation, then retry.`,
+      `Run /dev to finish implementing SPEC.md work items (implement + tests + self review) and get human confirmation, then retry.`,
   );
 }
 
@@ -68,11 +68,11 @@ export default async function devPhaseGate(input: {
       if (!isNextPhaseCommand(candidates)) return;
 
       const base = isAbsolute(ws) ? ws : join(process.cwd(), ws);
-      const plan = join(base, "PLAN.md");
+      const plan = join(base, "SPEC.md");
       const fm = frontmatter(plan);
 
-      if (!fm) complain(plan, "PLAN.md does not exist or has no frontmatter.");
-      if ((fm as any).status !== "complete") complain(plan, "PLAN.md is not marked complete (status != complete).");
+      if (!fm) complain(plan, "SPEC.md does not exist or has no frontmatter.");
+      if ((fm as any).status !== "complete") complain(plan, "SPEC.md is not marked complete (status != complete).");
       for (const f of REQUIRED) {
         if ((fm as any)[f] !== "yes") complain(plan, `required field '${f}' is not 'yes'.`);
       }

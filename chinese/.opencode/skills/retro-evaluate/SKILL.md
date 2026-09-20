@@ -15,7 +15,7 @@ description: "Use when running an optional but high-yield retrospective after a 
 
 ## 输入（要拿什么进来）
 
-- 各阶段产物与状态：`PROJECT-REVIEW.md` / `DESIGN.md` / `PLAN.md`（含 item retries）/ `TEST.md` / `RELEASE.md`
+- 各阶段产物与状态：`PROJECT-REVIEW.md` / `SPEC.md` / `SPEC.md`（含 item retries）/ `TEST.md` / `RELEASE.md`
 - `issues.md`（缺陷记录）
 - 借助 `knowledge-retrospective` 方法沉淀
 

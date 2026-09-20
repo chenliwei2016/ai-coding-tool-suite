@@ -3,10 +3,10 @@
  *
  * Purpose: before proceeding to the "Design" phase, require the init deliverable
  * PROJECT-REVIEW.md to be complete. If it is missing, not marked complete, or not
- * human-confirmed, block the action that enters the design phase.
+ * human-confirmed, block the action that enters the spec phase.
  *
  * Hook: command.execute.before — when the command about to run is the next-phase
- * entry (/design), verify the PROJECT-REVIEW.md frontmatter at the project root:
+ * entry (/spec), verify the PROJECT-REVIEW.md frontmatter at the project root:
  *   - exists and status == complete
  *   - the six required fields
  *     (entrypoints/architecture/data_model/business_rules/dependencies/risks) == yes
@@ -18,7 +18,7 @@
 import { readFileSync } from "node:fs";
 import { join, isAbsolute } from "node:path";
 
-const NEXT_PHASE = ["design"];
+const NEXT_PHASE = ["spec"];
 const REQUIRED = [
   "entrypoints",
   "architecture",
@@ -52,7 +52,7 @@ function frontmatter(path: string): Record<string, string> | null {
 
 function complain(path: string | null, reason: string): never {
   throw new Error(
-    `[know-phase-gate] blocked: cannot proceed to the design phase. ${reason}\n` +
+    `[know-phase-gate] blocked: cannot proceed to the spec phase. ${reason}\n` +
       (path ? `  expected ${path} ` : "") +
       `Run /know-project to produce PROJECT-REVIEW.md, pass the self + human-confirmation gates, then retry.`,
   );

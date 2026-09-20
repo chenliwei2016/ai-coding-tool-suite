@@ -12,34 +12,25 @@ cp -r "$REPO/chinese/.opencode" "$APP/.opencode"
 cp "$REPO/.opencode/plugins/commit-translation-gate.ts" "$APP/.opencode/plugins/"
 cp "$REPO/.opencode/commands/sync-translation.md" "$APP/.opencode/commands/"
 
-# stub next-phase command so know-phase-gate has something to intercept
-cat > "$APP/.opencode/commands/design.md" << 'EOF'
+# stubs so the phase gates have deterministic commands to intercept (the real
+# framework commands run heavy/LLM work; the scratch uses trivial stubs)
+cat > "$APP/.opencode/commands/spec.md" << 'EOF'
 ---
-description: "(stub) enter the design phase. Should be blocked until the init phase (PROJECT-REVIEW.md) is complete."
+description: "(stub) enter the spec phase. Should be blocked until the init phase (PROJECT-REVIEW.md) is complete."
 agent: build
 ---
-(stub) Produce a design specification for the project.
+(stub) Produce a spec from requirements.
 EOF
-# stub the plan-phase command so design-phase-gate has something to intercept
-cat > "$APP/.opencode/commands/plan.md" << 'EOF'
----
-description: "(stub) enter the plan phase. Should be blocked until the design phase (GATE-REQUIREMENTS.md + DESIGN.md) is complete."
-agent: build
----
-(stub) Produce an ordered, parallelizable plan from the design spec.
-EOF
-# stub the implementation-phase command so plan-phase-gate has something to intercept
 cat > "$APP/.opencode/commands/dev.md" << 'EOF'
 ---
-description: "(stub) enter the implementation phase. Should be blocked until the plan phase (PLAN.md) is complete."
+description: "(stub) enter the implementation phase. Should be blocked until the spec phase (SPEC.md) is complete."
 agent: build
 ---
-(stub) Implement the plan via feature-implementation.
+(stub) Implement the spec via feature-implementation.
 EOF
-# stub the test-phase command so dev-phase-gate has something to intercept
 cat > "$APP/.opencode/commands/test.md" << 'EOF'
 ---
-description: "(stub) enter the test phase. Should be blocked until the dev phase (PLAN.md implementation) is complete."
+description: "(stub) enter the test phase. Should be blocked until the dev phase (SPEC.md implementation) is complete."
 agent: build
 ---
 (stub) Run functional/performance/security tests from the test plan.

@@ -5,4 +5,4 @@ tests_written: no
 human_confirmed: true
 ---
 
-# PLAN — demo (dev state)
+# SPEC — demo (dev state)

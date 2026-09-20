@@ -7,7 +7,7 @@ agent: build
 
 ## 本命令要做的事
 
-1. **收集各阶段数字**：从 `PROJECT-REVIEW.md` / `DESIGN.md` / `PLAN.md`(含 retries) / `TEST.md` / `RELEASE.md` / `issues.md` 统计可量化指标（没记录标 N/A）。
+1. **收集各阶段数字**：从 `PROJECT-REVIEW.md` / `SPEC.md` / `SPEC.md`(含 retries) / `TEST.md` / `RELEASE.md` / `issues.md` 统计可量化指标（没记录标 N/A）。
 2. **指标看板**：每阶段一张数字表（含**代码采用率 / 返工率 / 缺陷逃逸率 / 周期时间**等缺省指标，项目可扩展）。
 3. **保留/改进**：由指标异常推导「保留(P)/改进(A)」清单，每条带前后量化对比；下轮目标 1~3 个可量化项。
 4. **落盘 `RETRO.md`**：frontmatter `status: draft`；经你确认后置 `human_confirmed: true`、`status: complete`、`fed_back: yes`。

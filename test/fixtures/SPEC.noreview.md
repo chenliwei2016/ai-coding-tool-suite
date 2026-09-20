@@ -7,10 +7,13 @@ data_model: yes
 interfaces: yes
 acceptance_criteria: yes
 non_functional: yes
+ordered_batches: yes
+parallel_tracks: yes
+task_backlog: yes
+dependencies: yes
+acceptance_mapping: yes
 reviewed: no
-requirements_sign_off: true
-human_confirmed: true
+human_confirmed: false
 ---
 
-# DESIGN — demo
-Missing reviewed=yes (auto review not done).
+# SPEC — demo

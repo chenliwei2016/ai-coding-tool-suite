@@ -17,7 +17,7 @@ improvements into the **next loop**. **No conclusion without a number goes into 
 
 ## Input (what to bring in)
 
-- Per-phase deliverables & state: `PROJECT-REVIEW.md` / `DESIGN.md` / `PLAN.md` (with item retries) /
+- Per-phase deliverables & state: `PROJECT-REVIEW.md` / `SPEC.md` / `SPEC.md` (with item retries) /
   `TEST.md` / `RELEASE.md`
 - `issues.md` (defect record)
 - Use the `knowledge-retrospective` approach to distill

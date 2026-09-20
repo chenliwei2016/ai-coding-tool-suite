@@ -1,25 +1,25 @@
 ---
 name: dev-implement
-description: "Use when entering the implementation (development) phase: execute PLAN.md work items iteratively — implement, write unit tests, self-review — and write status back into PLAN.md; then pass the dev gate (human confirmation) before testing. Front-load keywords: implement, develop, feature implementation, unit test, self review, write code, development."
+description: "Use when entering the implementation (development) phase: execute SPEC.md work items iteratively — implement, write unit tests, self-review — and write status back into SPEC.md; then pass the dev gate (human confirmation) before testing. Front-load keywords: implement, develop, feature implementation, unit test, self review, write code, development."
 ---
 
 # Dev / Implement (Development)
 
-Execute **`PLAN.md`** work items one by one into **code + unit tests + self-review**, and **write each
-item's status back into PLAN.md**. This is a **multi-round iterative** phase: take one work item, read →
+Execute **`SPEC.md`** work items one by one into **code + unit tests + self-review**, and **write each
+item's status back into SPEC.md**. This is a **multi-round iterative** phase: take one work item, read →
 implement → unit-test → self-review → mark done; only move on when it passes. Real QA happens later in the
 **Test** phase.
 
 ## When to use
 
 - You have reached the "Dev / Implement" phase (triggered by `/dev`)
-- You have a `PLAN.md` (with `implementation_complete: no`) and are about to write code
+- You have a `SPEC.md` (with `implementation_complete: no`) and are about to write code
 - You want steady progress with one item per closed loop, advancing only after self-review passes
 
 ## Input (what to bring in)
 
-- `PLAN.md` (task_backlog with states, `DESIGN.md` refs, critical path)
-- `DESIGN.md` / `PROJECT-REVIEW.md` (spec and current state)
+- `SPEC.md` (task_backlog with states, `SPEC.md` refs, critical path)
+- `SPEC.md` / `PROJECT-REVIEW.md` (spec and current state)
 
 ## Core steps (loop over items)
 
@@ -31,7 +31,7 @@ For each work item:
 3. **Write unit tests**: use `unit-test-writing` for the changed/new logic; run them to green (a red test
    counts as a rework).
 4. **Self-review**: the developer runs `design-code-review`'s self-check; any unmet item → rework.
-5. **Write status back**: on pass, mark the item `done` in PLAN.md with a `tests:` link (unit-test path).
+5. **Write status back**: on pass, mark the item `done` in SPEC.md with a `tests:` link (unit-test path).
    Otherwise increment `retries`.
 6. **Move to the next item** until all are done.
 
@@ -45,7 +45,7 @@ For each work item:
 ## Wrap-up (all items done)
 
 1. Verify: every item `done` with a `tests:` link.
-2. Update PLAN.md frontmatter: `implementation_complete: yes`, `tests_written: yes`.
+2. Update SPEC.md frontmatter: `implementation_complete: yes`, `tests_written: yes`.
 3. Human confirmation: use the `question` tool to report implementation scope / change area / test status; on
    confirmation set `human_confirmed: true`.
 4. Done → you may enter the **Test** phase (`dev-phase-gate` validates the fields above).
@@ -67,5 +67,5 @@ For each work item:
 
 ## Output
 
-- Implementation done + unit tests + PLAN.md items written back as `done`/`tests:`, `implementation_complete: yes`,
+- Implementation done + unit tests + SPEC.md items written back as `done`/`tests:`, `implementation_complete: yes`,
   `human_confirmed: true`

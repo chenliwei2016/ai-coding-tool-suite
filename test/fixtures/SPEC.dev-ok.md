@@ -2,7 +2,7 @@
 status: complete
 implementation_complete: yes
 tests_written: yes
-human_confirmed: false
+human_confirmed: true
 ---
 
-# PLAN — demo (dev state)
+# SPEC — demo (dev state)

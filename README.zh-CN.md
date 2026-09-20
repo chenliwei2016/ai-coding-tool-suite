@@ -12,26 +12,25 @@
 
 把"经过实战检验的开发实践"沉淀为约定的工程方法，而不是临时拼凑提示词。框架把**从接手一个代码库到发布上线再到复盘**的 7 个阶段，串成一条"命令 + 技能 + 硬门禁"的链路——每个阶段都**独立门禁下一阶段**，交付物未达标、未评审、未经人工确认，就放行不了。
 
-## 生命周期（7 个阶段，硬门禁串联）
+## 生命周期（6 个阶段，硬门禁串联）
 
 ```
-/know-project → know-phase-gate → /design → design-phase-gate → /plan → plan-phase-gate
-→ /dev → dev-phase-gate → /test → test-phase-gate → /release → release-phase-gate → /retro
+/know-project → know-phase-gate → /spec → spec-phase-gate → /dev → dev-phase-gate
+→ /test → test-phase-gate → /release → release-phase-gate → /retro
 ```
 
 | 阶段 | 命令 | 技能 | 门禁（插件 / env） | 交付物 |
 |---|---|---|---|---|
 | 1 初始化 / 认识项目 | `/know-project` | `know-your-project` | `know-phase-gate.ts` / `KNOW_PHASE_GATE` | `PROJECT-REVIEW.md` |
-| 2 设计 (SDD / **Spec**) | `/design` | `design-and-spec` | `design-phase-gate.ts` / `DESIGN_PHASE_GATE` | `DESIGN.md` |
-| 3 计划 (SDD **task 拆解**) | `/plan` | `plan-project` | `plan-phase-gate.ts` / `PLAN_PHASE_GATE` | `PLAN.md` |
-| 4 开发 | `/dev` | `dev-implement` | `dev-phase-gate.ts` / `DEV_PHASE_GATE` | 实现代码 + 单测 |
-| 5 测试 | `/test` | `test-project` | `test-phase-gate.ts` / `TEST_PHASE_GATE` | `TEST.md` |
-| 6 部署 / 发布 | `/release` | `release-project` | `release-phase-gate.ts` / `RELEASE_PHASE_GATE` | `RELEASE.md` |
-| 7 复盘 | `/retro` | `retro-evaluate` | *(叶子节点，无出口门禁)* | `RETRO.md` |
+| 2 **规格 (SDD**：澄清 → 规格 → 拆任务) | `/spec` | `spec-project` | `spec-phase-gate.ts` / `SPEC_PHASE_GATE` | `SPEC.md` |
+| 3 开发 | `/dev` | `dev-implement` | `dev-phase-gate.ts` / `DEV_PHASE_GATE` | 实现代码 + 单测 |
+| 4 测试 | `/test` | `test-project` | `test-phase-gate.ts` / `TEST_PHASE_GATE` | `TEST.md` |
+| 5 部署 / 发布 | `/release` | `release-project` | `release-phase-gate.ts` / `RELEASE_PHASE_GATE` | `RELEASE.md` |
+| 6 复盘 | `/retro` | `retro-evaluate` | *(叶子节点，无出口门禁)* | `RETRO.md` |
 
 每阶段形态统一为 **命令 → 技能 → 门禁**，产出一份带 frontmatter 状态的交付物，由下一阶段门禁机检。返工有上限（开发 item `K=3`、阶段 `M=20`），不让循环失控。
 
-*SDD 对齐说明：`DESIGN.md` 即 SDD / SpecKit 所称的 **spec**（需求与实现之间的契约）；`PLAN.md` 进一步把它拆成可独立实现的 **unit task**。*
+*SDD 形态：规格阶段一次完成 澄清 → 写规格 → 拆任务；`SPEC.md` 即需求与实现之间的 spec，既含设计（范围/取舍/架构/数据/接口/验收/NFR），也含开发直接执行的 unit task 拆解。*
 
 ## 编排模型
 

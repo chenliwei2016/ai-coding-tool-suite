@@ -9,8 +9,8 @@ metrics**, produce `RETRO.md`, and feed improvements into the next loop. **No co
 
 ## What this command does
 
-1. **Collect per-phase numbers**: tally quantifiable metrics from `PROJECT-REVIEW.md` / `DESIGN.md` /
-   `PLAN.md` (with retries) / `TEST.md` / `RELEASE.md` / `issues.md` (mark N/A when unrecorded).
+1. **Collect per-phase numbers**: tally quantifiable metrics from `PROJECT-REVIEW.md` / `SPEC.md` /
+   `SPEC.md` (with retries) / `TEST.md` / `RELEASE.md` / `issues.md` (mark N/A when unrecorded).
 2. **Metrics dashboard**: one number table per phase (incl. default metrics such as **code adoption rate /
    rework rate / defect escape rate / cycle time**; extendable per project).
 3. **Keep/improve**: derive a keep/improve list from metric anomalies, each with quantified before/after;

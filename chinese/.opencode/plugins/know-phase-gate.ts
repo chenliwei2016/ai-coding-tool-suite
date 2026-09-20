@@ -2,9 +2,9 @@
  * know-phase-gate —— 初始化阶段（Know Your Project）的门禁插件
  *
  * 目的：在进入「设计」阶段前，强制要求初始化交付物 PROJECT-REVIEW.md 已达标。
- * 若缺失、状态未 complete、或未经人工确认，则拦下「进入设计阶段」的动作。
+ * 若缺失、状态未 complete、或未经人工确认，则拦下「进入规格阶段」的动作。
  *
- * 钩子：command.execute.before —— 当即将执行的命令是下一阶段入口（/design）时，
+ * 钩子：command.execute.before —— 当即将执行的命令是下一阶段入口（/spec）时，
  * 校验当前工程根 PROJECT-REVIEW.md 的 frontmatter：
  *   - 存在且 status == complete
  *   - 六必填字段（entrypoints/architecture/data_model/business_rules/dependencies/risks）== yes
@@ -16,7 +16,7 @@
 import { readFileSync } from "node:fs";
 import { join, isAbsolute } from "node:path";
 
-const NEXT_PHASE = ["design"];            // 下一阶段命令关键词，命中即需要本阶段门禁
+const NEXT_PHASE = ["spec"];            // 下一阶段命令关键词，命中即需要本阶段门禁
 const REQUIRED = [
   "entrypoints",
   "architecture",
@@ -50,7 +50,7 @@ function frontmatter(path: string): Record<string, string> | null {
 
 function complain(path: string | null, reason: string): never {
   throw new Error(
-    `[know-phase-gate] blocked: cannot proceed to the design phase. ${reason}\n` +
+    `[know-phase-gate] blocked: cannot proceed to the spec phase. ${reason}\n` +
       (path ? `  expected ${path} ` : "") +
       `Run /know-project to produce PROJECT-REVIEW.md, pass the self + human-confirmation gates, then retry.`,
   );
