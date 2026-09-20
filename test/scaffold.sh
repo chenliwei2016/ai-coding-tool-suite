@@ -36,6 +36,14 @@ agent: build
 ---
 (stub) Implement the plan via feature-implementation.
 EOF
+# stub the test-phase command so dev-phase-gate has something to intercept
+cat > "$APP/.opencode/commands/test.md" << 'EOF'
+---
+description: "(stub) enter the test phase. Should be blocked until the dev phase (PLAN.md implementation) is complete."
+agent: build
+---
+(stub) Run functional/performance/security tests from the test plan.
+EOF
 
 # bilingual fixture pair used by the translation-gate / sync-translation tests
 mkdir -p "$APP/chinese" "$APP/english"

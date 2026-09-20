@@ -22,7 +22,10 @@ The target lifecycle (overview; later phases will be detailed progressively in f
 3. **计划** — prioritize the spec into an ordered, parallelizable plan. *(Implemented: `/plan` command,
    `plan-project` skill, `plan-phase-gate.ts` / `PLAN_PHASE_GATE`; `PLAN.md` is the deliverable, hard-gated
    on `reviewed`, `human_confirmed`, with `DESIGN.md` as required input.)*
-4. **开发** — spec -> code; unit tests; code review.
+4. **开发** — spec -> code; unit tests; code review. *(Implemented: `/dev` command, `dev-implement` skill,
+   `dev-phase-gate.ts` / `DEV_PHASE_GATE`. Executes PLAN.md work items iteratively and writes status back
+   into PLAN.md; hard-gated on `implementation_complete`, `tests_written`, `human_confirmed`. Self-review
+   here; real QA belongs to the Test phase. Rework caps: item K=3, stage M=20.)*
 5. **测试** — functional (black-box), performance, security, test review; defects flow back to design.
 6. **部署 (release)** — build artifact -> version-verification env -> pre-prod review -> production.
 7. **复盘 / 评估 (retrospective)** — optional but high-yield; the Deming/reflection cycle: retain what

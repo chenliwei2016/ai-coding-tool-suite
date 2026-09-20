@@ -144,6 +144,32 @@ t28() { want t28 || return; echo "== t28 plan-phase-gate: complete PLAN + DESIGN
   [ "$EXIT" -eq 0 ] && pass "t28 /dev allowed (exit=0)" || fail "t28 /dev blocked (exit=$EXIT)"
   reset_tree; rm -f "$PROJ/DESIGN.md" "$PROJ/PLAN.md"; }
 
+# dev-phase-gate gates /test, checking PLAN.md implementation state. Blocked => EXIT != 0.
+TQ() { local c="$1" why="$2" pfx="$3"; want "$c" || return; echo "== $c dev-phase-gate: $why =="
+  reset_tree; rm -f "$PROJ/PLAN.md"; git -C "$PROJ" commit -aqm "clean" 2>/dev/null || true
+  [ "$pfx" != "IGNORE" ] && [ -f "./fixtures/$pfx" ] && cp "./fixtures/$pfx" "$PROJ/PLAN.md"
+  oc --command test "go"
+  [ "$EXIT" -ne 0 ] && pass "$c blocked (exit=$EXIT)" || fail "$c NOT blocked (exit=0)"
+  reset_tree; rm -f "$PROJ/PLAN.md"; }
+
+t29(){ TQ t29 "missing PLAN.md blocks" "IGNORE"; }
+t30(){ TQ t30 "implementation_complete=no blocks" "PLAN.dev-pending.md"; }
+t31(){ TQ t31 "tests_written=no blocks" "PLAN.dev-notests.md"; }
+t32(){ TQ t32 "implementation not human-confirmed blocks" "PLAN.dev-noconfirm.md"; }
+
+t33() { want t33 || return; echo "== t33 dev-phase-gate: env off bypass =="
+  reset_tree; rm -f "$PROJ/PLAN.md"; git -C "$PROJ" commit -aqm "clean" 2>/dev/null || true
+  ENV_EXTRAS=(DEV_PHASE_GATE=off); oc --command test "go past gate"
+  [ "$EXIT" -eq 0 ] && pass "t33 gate bypassed (exit=0)" || fail "t33 still blocked (exit=$EXIT)"
+  ENV_EXTRAS=(); reset_tree; rm -f "$PROJ/PLAN.md"; }
+
+t34() { want t34 || return; echo "== t34 dev-phase-gate: complete implementation allows /test =="
+  reset_tree; rm -f "$PROJ/PLAN.md"; git -C "$PROJ" commit -aqm "clean" 2>/dev/null || true
+  cp "./fixtures/PLAN.dev-ok.md" "$PROJ/PLAN.md"
+  oc --command test "go"
+  [ "$EXIT" -eq 0 ] && pass "t34 /test allowed (exit=0)" || fail "t34 /test blocked (exit=$EXIT)"
+  reset_tree; rm -f "$PROJ/PLAN.md"; }
+
 echo "== running suite against $PROJ (model: ${MODEL:-default}) =="
-t14; t01; t02; t03; t07; t08; t09; t10; t11; t12; t13; t04; t05; t06; t15; t16; t17; t18; t19; t20; t22; t23; t24; t25; t26; t27; t28
+t14; t01; t02; t03; t07; t08; t09; t10; t11; t12; t13; t04; t05; t06; t15; t16; t17; t18; t19; t20; t22; t23; t24; t25; t26; t27; t28; t29; t30; t31; t32; t33; t34
 echo "== done =="
