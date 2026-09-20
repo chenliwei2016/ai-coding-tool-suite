@@ -5,3 +5,5 @@ bun.lock
 .gitignore# Windows NTFS Zone.Identifier ADS（标记文件来源），无实际用途，忽略
 *:Zone.Identifier
 **/*:Zone.Identifier
+
+test/.runtime/

@@ -12,6 +12,10 @@
  * "Changed" = added / modified / deleted / renamed / untracked (git status).
  * A pair is consistent only when BOTH sides appear in the same change set.
  *
+ * SCOPE (strict): this gate only ever inspects paths whose top-level is EXACTLY
+ * `chinese/` or `english/`. Every other directory (e.g. `test/`, the root
+ * `.opencode/`, docs) is ignored by design and never blocks a commit.
+ *
  * Toggle (env TRANSLATION_GATE): "off" disables the gate.
  */
 import { spawnSync } from "node:child_process";
