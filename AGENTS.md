@@ -17,7 +17,7 @@ The target lifecycle (overview; later phases will be detailed progressively in f
    `know-your-project` skill, `know-phase-gate.ts` / `KNOW_PHASE_GATE`.)*
 2. **设计 (SDD)** — turn requirements into a specification; auto + human design review. *(Implemented:
    `/design` command, `design-and-spec` skill, `design-phase-gate.ts` / `DESIGN_PHASE_GATE`. Inputs:
-   `PROJECT-REVIEW.md` (from phase 1) + inline requirements gated by project-root `GATE_REQUIREMENTS.md`;
+   `PROJECT-REVIEW.md` (from phase 1) + inline requirements gated by project-root `GATE-REQUIREMENTS.md`;
    `DESIGN.md` is the deliverable, hard-gated on `reviewed`, `requirements_sign_off`, `human_confirmed`.)*
 3. **计划** — prioritize the spec into an ordered, parallelizable plan. *(Implemented: `/plan` command,
    `plan-project` skill, `plan-phase-gate.ts` / `PLAN_PHASE_GATE`; `PLAN.md` is the deliverable, hard-gated
@@ -27,6 +27,10 @@ The target lifecycle (overview; later phases will be detailed progressively in f
    into PLAN.md; hard-gated on `implementation_complete`, `tests_written`, `human_confirmed`. Self-review
    here; real QA belongs to the Test phase. Rework caps: item K=3, stage M=20.)*
 5. **测试** — functional (black-box), performance, security, test review; defects flow back to design.
+   *(Implemented: `/test` command, `test-project` skill, `test-phase-gate.ts` / `TEST_PHASE_GATE`.
+   `TEST.md` is the deliverable (`result: pass`), hard-gated on `functional`/`performance`/`security`/
+   `reviewed`/`human_confirmed`. Thresholds reference the project-root `GATE-REQUIREMENTS.md`; defects flow
+   into `issues.md`.)*
 6. **部署 (release)** — build artifact -> version-verification env -> pre-prod review -> production.
 7. **复盘 / 评估 (retrospective)** — optional but high-yield; the Deming/reflection cycle: retain what
    worked, fix what didn't, feed into the next loop.

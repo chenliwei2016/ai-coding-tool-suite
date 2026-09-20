@@ -2,10 +2,10 @@
  * design-phase-gate —— 设计阶段（Design/SDD）的门禁插件
  *
  * 目的：在进入「计划」阶段前，强制要求设计交付物达标。
- * 校验对象：工程根的 GATE_REQUIREMENTS.md（需求门禁规范）与 DESIGN.md。
+ * 校验对象：工程根的 GATE-REQUIREMENTS.md（需求门禁规范）与 DESIGN.md。
  *
  * 硬性条件（command.execute.before 拦 /plan）：
- *   - GATE_REQUIREMENTS.md 必须存在（无需求规范不入计划）
+ *   - GATE-REQUIREMENTS.md 必须存在（无需求规范不入计划）
  *   - DESIGN.md 存在且 status == complete
  *   - 八个必填字段（scope/option_analysis/architecture/data_model/interfaces/
  *     acceptance_criteria/non_functional/reviewed）== yes（含 reviewed=yes 自动评审）
@@ -79,10 +79,10 @@ export default async function designPhaseGate(input: {
       if (!isNextPhaseCommand(candidates)) return;
 
       const base = isAbsolute(ws) ? ws : join(process.cwd(), ws);
-      const gateFile = join(base, "GATE_REQUIREMENTS.md");
+      const gateFile = join(base, "GATE-REQUIREMENTS.md");
       const design = join(base, "DESIGN.md");
 
-      if (!existsSync(gateFile)) complain(gateFile, "GATE_REQUIREMENTS.md (requirements gate spec) does not exist.");
+      if (!existsSync(gateFile)) complain(gateFile, "GATE-REQUIREMENTS.md (requirements gate spec) does not exist.");
 
       const fm = frontmatter(design);
       if (!fm) complain(design, "DESIGN.md does not exist or has no frontmatter.");

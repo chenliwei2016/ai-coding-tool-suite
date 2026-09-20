@@ -1,5 +1,5 @@
 ---
-description: "Enter the Design (SDD) phase: collect requirements, check them against GATE_REQUIREMENTS.md, get requirements sign-off, produce the DESIGN.md spec, and pass the auto-review + human-confirmation gates before the Plan phase."
+description: "Enter the Design (SDD) phase: collect requirements, check them against GATE-REQUIREMENTS.md, get requirements sign-off, produce the DESIGN.md spec, and pass the auto-review + human-confirmation gates before the Plan phase."
 agent: build
 ---
 
@@ -11,11 +11,11 @@ skill end-to-end and do not proceed to the **Plan** phase until this phase is co
 
 1. **Prepare inputs**:
    - Read `PROJECT-REVIEW.md` (delivered by the init phase and confirmed).
-   - **Ensure `GATE_REQUIREMENTS.md` exists** at the project root (it defines the "requirements gate
+   - **Ensure `GATE-REQUIREMENTS.md` exists** at the project root (it defines the "requirements gate
      spec"). If missing, ask the user to provide it first — do not proceed without it.
 2. **Collect requirements**: use the `question` tool to gather this design's requirements. No fixed
    format/doc; different projects have different requirement shapes.
-3. **Enforce the gate spec**: check the requirements against `GATE_REQUIREMENTS.md` item by item; send
+3. **Enforce the gate spec**: check the requirements against `GATE-REQUIREMENTS.md` item by item; send
    back for clarification until they pass.
 4. **Requirements sign-off**: use the `question` tool to confirm with the user that these requirements
    are good to continue; on confirmation set `DESIGN.md`'s `requirements_sign_off` to `true`.

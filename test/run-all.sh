@@ -90,32 +90,32 @@ t14() { want t14 || return; echo "== t14 role agents subagent-only (static) =="
 
 # design-phase-gate gates /plan. Blocked => EXIT != 0.
 DG() { local c="$1" why="$2" gate="$3" dfx="$4"; want "$c" || return; echo "== $c design-phase-gate: $why =="
-  reset_tree; rm -f "$PROJ/DESIGN.md" "$PROJ/GATE_REQUIREMENTS.md"; git -C "$PROJ" commit -aqm "clean" 2>/dev/null || true
-  if [ "$gate" = "yes" ]; then cp "./fixtures/GATE_REQUIREMENTS.md" "$PROJ/GATE_REQUIREMENTS.md"; fi
+  reset_tree; rm -f "$PROJ/DESIGN.md" "$PROJ/GATE-REQUIREMENTS.md"; git -C "$PROJ" commit -aqm "clean" 2>/dev/null || true
+  if [ "$gate" = "yes" ]; then cp "./fixtures/GATE-REQUIREMENTS.md" "$PROJ/GATE-REQUIREMENTS.md"; fi
   [ "$dfx" != "IGNORE" ] && [ -f "./fixtures/$dfx" ] && cp "./fixtures/$dfx" "$PROJ/DESIGN.md"
   oc --command plan "go"
   [ "$EXIT" -ne 0 ] && pass "$c blocked (exit=$EXIT)" || fail "$c NOT blocked (exit=0)"
-  reset_tree; rm -f "$PROJ/DESIGN.md" "$PROJ/GATE_REQUIREMENTS.md"; }
+  reset_tree; rm -f "$PROJ/DESIGN.md" "$PROJ/GATE-REQUIREMENTS.md"; }
 
-t15(){ DG t15 "missing GATE_REQUIREMENTS.md blocks" "no" "IGNORE"; }
+t15(){ DG t15 "missing GATE-REQUIREMENTS.md blocks" "no" "IGNORE"; }
 t16(){ DG t16 "no DESIGN.md blocks" "yes" "IGNORE"; }
 t17(){ DG t17 "status=draft blocks" "yes" "DESIGN.draft.md"; }
 t18(){ DG t18 "reviewed=no blocks" "yes" "DESIGN.nofield.md"; }
 t19(){ DG t19 "requirements not signed off blocks" "yes" "DESIGN.nosignoff.md"; }
 
 t20() { want t20 || return; echo "== t20 design-phase-gate: env off bypass =="
-  reset_tree; rm -f "$PROJ/DESIGN.md" "$PROJ/GATE_REQUIREMENTS.md"; git -C "$PROJ" commit -aqm "clean" 2>/dev/null || true
+  reset_tree; rm -f "$PROJ/DESIGN.md" "$PROJ/GATE-REQUIREMENTS.md"; git -C "$PROJ" commit -aqm "clean" 2>/dev/null || true
   ENV_EXTRAS=(DESIGN_PHASE_GATE=off); oc --command plan "go past gate"
   [ "$EXIT" -eq 0 ] && pass "t20 gate bypassed (exit=0)" || fail "t20 still blocked (exit=$EXIT)"
-  ENV_EXTRAS=(); reset_tree; rm -f "$PROJ/DESIGN.md" "$PROJ/GATE_REQUIREMENTS.md"; }
+  ENV_EXTRAS=(); reset_tree; rm -f "$PROJ/DESIGN.md" "$PROJ/GATE-REQUIREMENTS.md"; }
 
 t22() { want t22 || return; echo "== t22 design-phase-gate: complete DESIGN allows /plan =="
-  reset_tree; rm -f "$PROJ/DESIGN.md" "$PROJ/GATE_REQUIREMENTS.md"; git -C "$PROJ" commit -aqm "clean" 2>/dev/null || true
-  cp "./fixtures/GATE_REQUIREMENTS.md" "$PROJ/GATE_REQUIREMENTS.md"
+  reset_tree; rm -f "$PROJ/DESIGN.md" "$PROJ/GATE-REQUIREMENTS.md"; git -C "$PROJ" commit -aqm "clean" 2>/dev/null || true
+  cp "./fixtures/GATE-REQUIREMENTS.md" "$PROJ/GATE-REQUIREMENTS.md"
   cp "./fixtures/DESIGN.ok.md" "$PROJ/DESIGN.md"
   oc --command plan "go"
   [ "$EXIT" -eq 0 ] && pass "t22 /plan allowed (exit=0)" || fail "t22 /plan blocked (exit=$EXIT)"
-  reset_tree; rm -f "$PROJ/DESIGN.md" "$PROJ/GATE_REQUIREMENTS.md"; }
+  reset_tree; rm -f "$PROJ/DESIGN.md" "$PROJ/GATE-REQUIREMENTS.md"; }
 
 # plan-phase-gate gates /dev. Blocked => EXIT != 0.
 PG() { local c="$1" why="$2" dfx="$3" pfx="$4"; want "$c" || return; echo "== $c plan-phase-gate: $why =="
@@ -170,6 +170,32 @@ t34() { want t34 || return; echo "== t34 dev-phase-gate: complete implementation
   [ "$EXIT" -eq 0 ] && pass "t34 /test allowed (exit=0)" || fail "t34 /test blocked (exit=$EXIT)"
   reset_tree; rm -f "$PROJ/PLAN.md"; }
 
+# test-phase-gate gates /deploy, checking TEST.md. Blocked => EXIT != 0.
+TG() { local c="$1" why="$2" tfx="$3"; want "$c" || return; echo "== $c test-phase-gate: $why =="
+  reset_tree; rm -f "$PROJ/TEST.md"; git -C "$PROJ" commit -aqm "clean" 2>/dev/null || true
+  [ "$tfx" != "IGNORE" ] && [ -f "./fixtures/$tfx" ] && cp "./fixtures/$tfx" "$PROJ/TEST.md"
+  oc --command deploy "go"
+  [ "$EXIT" -ne 0 ] && pass "$c blocked (exit=$EXIT)" || fail "$c NOT blocked (exit=0)"
+  reset_tree; rm -f "$PROJ/TEST.md"; }
+
+t35(){ TG t35 "missing TEST.md blocks" "IGNORE"; }
+t36(){ TG t36 "status not complete blocks" "TEST.pending.md"; }
+t37(){ TG t37 "functional=no blocks" "TEST.nofunc.md"; }
+t38(){ TG t38 "result=fail blocks" "TEST.fail.md"; }
+
+t39() { want t39 || return; echo "== t39 test-phase-gate: env off bypass =="
+  reset_tree; rm -f "$PROJ/TEST.md"; git -C "$PROJ" commit -aqm "clean" 2>/dev/null || true
+  ENV_EXTRAS=(TEST_PHASE_GATE=off); oc --command deploy "go past gate"
+  [ "$EXIT" -eq 0 ] && pass "t39 gate bypassed (exit=0)" || fail "t39 still blocked (exit=$EXIT)"
+  ENV_EXTRAS=(); reset_tree; rm -f "$PROJ/TEST.md"; }
+
+t40() { want t40 || return; echo "== t40 test-phase-gate: TEST pass allows /deploy =="
+  reset_tree; rm -f "$PROJ/TEST.md"; git -C "$PROJ" commit -aqm "clean" 2>/dev/null || true
+  cp "./fixtures/TEST.ok.md" "$PROJ/TEST.md"
+  oc --command deploy "go"
+  [ "$EXIT" -eq 0 ] && pass "t40 /deploy allowed (exit=0)" || fail "t40 /deploy blocked (exit=$EXIT)"
+  reset_tree; rm -f "$PROJ/TEST.md"; }
+
 echo "== running suite against $PROJ (model: ${MODEL:-default}) =="
-t14; t01; t02; t03; t07; t08; t09; t10; t11; t12; t13; t04; t05; t06; t15; t16; t17; t18; t19; t20; t22; t23; t24; t25; t26; t27; t28; t29; t30; t31; t32; t33; t34
+t14; t01; t02; t03; t07; t08; t09; t10; t11; t12; t13; t04; t05; t06; t15; t16; t17; t18; t19; t20; t22; t23; t24; t25; t26; t27; t28; t29; t30; t31; t32; t33; t34; t35; t36; t37; t38; t39; t40
 echo "== done =="

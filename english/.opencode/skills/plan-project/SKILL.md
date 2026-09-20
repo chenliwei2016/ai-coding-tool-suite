@@ -19,7 +19,7 @@ rollback order, and pass **self-check + auto review + human confirmation** befor
 
 - `DESIGN.md` (authoritative spec, `status: complete`)
 - `PROJECT-REVIEW.md` (current-state constraints)
-- `GATE_REQUIREMENTS.md` (acceptance framing, optional cross-check)
+- `GATE-REQUIREMENTS.md` (acceptance framing, optional cross-check)
 
 ## Core steps
 

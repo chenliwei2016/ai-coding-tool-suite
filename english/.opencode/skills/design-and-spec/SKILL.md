@@ -1,6 +1,6 @@
 ---
 name: design-and-spec
-description: "Use when entering the design (SDD) phase: collect requirements and check them against GATE_REQUIREMENTS.md, get requirements sign-off, turn them into a DESIGN.md specification, and pass auto + human review before the plan phase. Front-load keywords: design, specification, spec, requirements, SDD, technical design, design review."
+description: "Use when entering the design (SDD) phase: collect requirements and check them against GATE-REQUIREMENTS.md, get requirements sign-off, turn them into a DESIGN.md specification, and pass auto + human review before the plan phase. Front-load keywords: design, specification, spec, requirements, SDD, technical design, design review."
 ---
 
 # Design & Spec (Design / SDD)
@@ -20,14 +20,14 @@ fixed format).
 
 - `PROJECT-REVIEW.md` (confirmed in Phase 1; if absent, do Phase 1 first)
 - This design's requirements (user's spoken words / docs / existing spec — any shape)
-- **`GATE_REQUIREMENTS.md`** (project root — defines the "requirements gate spec"; ask the user to add it if missing)
+- **`GATE-REQUIREMENTS.md`** (project root — defines the "requirements gate spec"; ask the user to add it if missing)
 
 ## Core steps (strict order)
 
-1. **Confirm inputs ready**: `GATE_REQUIREMENTS.md` exists; `PROJECT-REVIEW.md` exists. Fill gaps first.
+1. **Confirm inputs ready**: `GATE-REQUIREMENTS.md` exists; `PROJECT-REVIEW.md` exists. Fill gaps first.
 2. **Collect requirements**: use the `question` tool to gather "what to design". No fixed template;
    different projects have different shapes.
-3. **Enforce the gate spec**: check the requirements item by item against `GATE_REQUIREMENTS.md`.
+3. **Enforce the gate spec**: check the requirements item by item against `GATE-REQUIREMENTS.md`.
    Send back for clarification until they pass.
 4. **Requirements sign-off**: `question` to confirm "requirements are good to continue"; on confirmation set
    `requirements_sign_off: true`.
@@ -89,7 +89,7 @@ Raw requirements and source.
 
 ## Self-check checklist (soft gate)
 
-- [ ] `GATE_REQUIREMENTS.md` exists and the requirements passed its item-by-item check?
+- [ ] `GATE-REQUIREMENTS.md` exists and the requirements passed its item-by-item check?
 - [ ] Requirements signed off (`requirements_sign_off: true`)?
 - [ ] All eight required fields (scope/option_analysis/architecture/data_model/interfaces/acceptance_criteria/non_functional/reviewed) ready?
 - [ ] Requirements inlined into DESIGN.md?
@@ -98,7 +98,7 @@ Raw requirements and source.
 
 ## Common pitfalls
 
-- ❌ Designing without requirements → directionless; or forcing it without `GATE_REQUIREMENTS.md`
+- ❌ Designing without requirements → directionless; or forcing it without `GATE-REQUIREMENTS.md`
 - ❌ Proceeding without requirements sign-off → rework
 - ❌ Writing inferences/trade-offs without rationale → fails review
 - ❌ Submitting with missing required fields → blocked by `design-phase-gate`, cannot reach the plan phase

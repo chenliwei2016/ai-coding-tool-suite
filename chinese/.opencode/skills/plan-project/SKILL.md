@@ -17,7 +17,7 @@ description: "Use when entering the plan phase: turn the confirmed DESIGN.md int
 
 - `DESIGN.md`（规格权威来源，`status: complete`）
 - `PROJECT-REVIEW.md`（现状约束）
-- `GATE_REQUIREMENTS.md`（验收口径，可选核对）
+- `GATE-REQUIREMENTS.md`（验收口径，可选核对）
 
 ## 核心步骤（流程）
 

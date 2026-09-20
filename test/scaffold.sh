@@ -23,7 +23,7 @@ EOF
 # stub the plan-phase command so design-phase-gate has something to intercept
 cat > "$APP/.opencode/commands/plan.md" << 'EOF'
 ---
-description: "(stub) enter the plan phase. Should be blocked until the design phase (GATE_REQUIREMENTS.md + DESIGN.md) is complete."
+description: "(stub) enter the plan phase. Should be blocked until the design phase (GATE-REQUIREMENTS.md + DESIGN.md) is complete."
 agent: build
 ---
 (stub) Produce an ordered, parallelizable plan from the design spec.
@@ -43,6 +43,14 @@ description: "(stub) enter the test phase. Should be blocked until the dev phase
 agent: build
 ---
 (stub) Run functional/performance/security tests from the test plan.
+EOF
+# stub the deploy-phase command so test-phase-gate has something to intercept
+cat > "$APP/.opencode/commands/deploy.md" << 'EOF'
+---
+description: "(stub) enter the deploy phase. Should be blocked until the test phase (TEST.md result=pass) is complete."
+agent: build
+---
+(stub) Build an artifact, verify it, and release.
 EOF
 
 # bilingual fixture pair used by the translation-gate / sync-translation tests

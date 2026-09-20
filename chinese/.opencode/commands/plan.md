@@ -9,7 +9,7 @@ agent: build
 
 ## 本命令要做的事（严格按序）
 
-1. **准备输入**：读 `DESIGN.md`（规格权威来源）与 `PROJECT-REVIEW.md`（现状约束），必要时核对 `GATE_REQUIREMENTS.md`（验收口径）。
+1. **准备输入**：读 `DESIGN.md`（规格权威来源）与 `PROJECT-REVIEW.md`（现状约束），必要时核对 `GATE-REQUIREMENTS.md`（验收口径）。
 2. **拆解任务**：把设计切成**离散、可独立评审**的工作项（work items）。每项含：`id`、`标题`、`负责角色`（`@backend-developer` / `@frontend-developer` / `@quality-assurance`，对应前端/后端/测试）、`改动范围`（文件/模块/接口）、`输入与产出`、`验收`（链接到 `DESIGN.md` 的 `acceptance_criteria`）、`依赖`（显式前置项）。
    - 建议先把 `DESIGN.md` 的架构/数据模型/接口分别委派给 `@frontend-architect`/`@backend-architect`，确认任务粒度和可并行边界再落表。
 3. **拓扑排序**：按依赖排出**先后顺序**（前置必须先落地），标出关键路径（critical path）；尽量让无依赖的工作项松耦合、可分批。

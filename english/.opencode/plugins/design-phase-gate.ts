@@ -2,10 +2,10 @@
  * design-phase-gate — gate plugin for the Design (SDD) phase
  *
  * Purpose: before proceeding to the "Plan" phase, require the design deliverable
- * to be complete. Validates the project-root GATE_REQUIREMENTS.md and DESIGN.md.
+ * to be complete. Validates the project-root GATE-REQUIREMENTS.md and DESIGN.md.
  *
  * Hard conditions (command.execute.before intercepts /plan):
- *   - GATE_REQUIREMENTS.md must exist (no requirements gate spec -> no plan)
+ *   - GATE-REQUIREMENTS.md must exist (no requirements gate spec -> no plan)
  *   - DESIGN.md exists and status == complete
  *   - the eight required fields (scope/option_analysis/architecture/data_model/
  *     interfaces/acceptance_criteria/non_functional/reviewed) == yes
@@ -80,10 +80,10 @@ export default async function designPhaseGate(input: {
       if (!isNextPhaseCommand(candidates)) return;
 
       const base = isAbsolute(ws) ? ws : join(process.cwd(), ws);
-      const gateFile = join(base, "GATE_REQUIREMENTS.md");
+      const gateFile = join(base, "GATE-REQUIREMENTS.md");
       const design = join(base, "DESIGN.md");
 
-      if (!existsSync(gateFile)) complain(gateFile, "GATE_REQUIREMENTS.md (requirements gate spec) does not exist.");
+      if (!existsSync(gateFile)) complain(gateFile, "GATE-REQUIREMENTS.md (requirements gate spec) does not exist.");
 
       const fm = frontmatter(design);
       if (!fm) complain(design, "DESIGN.md does not exist or has no frontmatter.");

@@ -14,7 +14,7 @@ Precondition: `DESIGN.md` must be `status: complete` and `human_confirmed: true`
 ## What this command does (in strict order)
 
 1. **Prepare inputs**: read `DESIGN.md` (authoritative spec) and `PROJECT-REVIEW.md` (current-state
-   constraints); check `GATE_REQUIREMENTS.md` as needed for the acceptance baseline.
+   constraints); check `GATE-REQUIREMENTS.md` as needed for the acceptance baseline.
 2. **Decompose into work items**: cut the design into **discrete, independently reviewable** tasks. Each
    holds: `id`, `title`, `owner role` (`@backend-developer` / `@frontend-developer` / `@quality-assurance`),
    `change scope` (files/modules/interfaces), `inputs & outputs`, `acceptance` (linked to `DESIGN.md`'s
