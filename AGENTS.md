@@ -38,6 +38,7 @@ never merged.
 - `chinese/.opencode/` — Chinese edition. **Author-maintained source of truth.**
 - `english/.opencode/` — English edition (translated).
 - Both mirror identically: `skills/<name>/SKILL.md`, `agents/*.md`, `commands/*.md`, `plugins/*.ts`.
+- `test/` — E2E harness (see "Testing" below). Project-local, not mirrored.
 - `README.md` / `README.zh-CN.md` are the human-facing docs (keep in sync too).
 
 ## Rules not to break
@@ -51,6 +52,25 @@ never merged.
 - **Double-quote every frontmatter `description:` value** whenever it contains a colon, slash, `@`, etc. (YAML breaks unquoted plain scalars on `: `; lazy but valid values trip parsers). When in doubt, quote it.
 - **Commit messages must be written in English.** Even though the Chinese edition is the author-maintained source of truth, commit history stays in English.
 - **Skill body template** (mimic when adding one): overview → when/适用场景 → input → core steps → self-check checklist (评审/自检) → common pitfalls (常见坑) → output/产出物.
+
+## Testing (E2E harness)
+
+`test/` holds a real-opencode E2E suite that validates every gate/mechanism in this framework.
+
+- `test/scaffold.sh` — builds a throwaway app at `test/.runtime/app` (gitignored, safe to re-run):
+  it copies `chinese/.opencode/` + the root tooling, adds fixture `chinese/`+`english/` pairs and a
+  `design.md` stub, and git-inits a baseline.
+- `test/run-all.sh` — runs cases **T1–T14** against that app using `opencode run` headless; pass a
+  subset, e.g. `bash test/run-all.sh t01 t07`. Uses the default model, `--format json`, `--auto`.
+- `test/fixtures/` — canned `PROJECT-REVIEW.*.md` states (ok / draft / nofield / noconfirm).
+- Covered: translation gate (block/paired/env-off), `/sync-translation` CJK-free, `/know-project`,
+  `know-phase-gate` (missing/draft/unconfirmed/env-off), `qa-gate` (hard-stale/hard-fresh/soft),
+  role-agents-subagent static check.
+
+Notes:
+- Run `bash test/scaffold.sh` at least once before `run-all.sh`.
+- Gate E2E is deterministic on **exit codes** (blocked → non-zero) and git/tree state, NOT on LLM text.
+- The `translation-gate` is **scoped to `chinese/` and `english/` only**; `test/` changes never block commits.
 
 ## Bilingual-sync enforcement (project-local tooling)
 
@@ -79,4 +99,4 @@ diff <(cd chinese && find . -type f | sort) <(cd english && find . -type f | sor
 - **Directory naming is consistently plural** (matches opencode — it accepts both): `skills/`, `agents/`, `commands/`, `plugins/`. Keep it plural everywhere.
 - `plugins/qa-gate.ts` is a standalone Node/TypeScript plugin. There is **no package.json or build step in-repo** (`package.json`/`node_modules` are gitignored). Do not invent tooling or run `tsc`/`npm` setup.
 - `.gitignore` is malformed (line 5: `.gitignore# Windows NTFS...` glued together) — copied verbatim from `~/.config`. Leave it, but don't rely on it for project files.
-- Repo state: single initial commit; most content is currently untracked until `git add` is run.
+- Framework content lives in `chinese/`+`english/`; project-local tooling (root `.opencode/`, `test/`) is **not** mirrored and never triggers the translation gate.
