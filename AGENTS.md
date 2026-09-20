@@ -13,8 +13,12 @@ The target lifecycle (overview; later phases will be detailed progressively in f
 
 1. **初始化 / Know Your Project** — reverse-engineer an unfamiliar or half-handover project:
    understand the codebase, produce a defined deliverable, and pass a **self-gate + human-confirmation
-   gate** before proceeding. Roughly the on-ramp of `/init`. *(Active workstream; see below.)*
-2. **设计 (SDD)** — turn requirements into a specification; auto + human design review.
+   gate** before proceeding. Roughly the on-ramp of `/init`. *(Implemented: `/know-project` command,
+   `know-your-project` skill, `know-phase-gate.ts` / `KNOW_PHASE_GATE`.)*
+2. **设计 (SDD)** — turn requirements into a specification; auto + human design review. *(Implemented:
+   `/design` command, `design-and-spec` skill, `design-phase-gate.ts` / `DESIGN_PHASE_GATE`. Inputs:
+   `PROJECT-REVIEW.md` (from phase 1) + inline requirements gated by project-root `GATE_REQUIREMENTS.md`;
+   `DESIGN.md` is the deliverable, hard-gated on `reviewed`, `requirements_sign_off`, `human_confirmed`.)*
 3. **计划** — prioritize the spec into an ordered, parallelizable plan.
 4. **开发** — spec -> code; unit tests; code review.
 5. **测试** — functional (black-box), performance, security, test review; defects flow back to design.
