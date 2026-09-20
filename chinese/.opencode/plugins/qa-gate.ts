@@ -54,10 +54,6 @@ function isRecentlyRegistered(file: string, winMin: number): boolean {
   }
 }
 
-export const qaGateRule = {
-  key: "qa-gate",
-};
-
 export default async function qaGate(input: { project?: { directory?: string | null } }) {
   const dir = input?.project?.directory;
   const file = issuesFile(dir);
