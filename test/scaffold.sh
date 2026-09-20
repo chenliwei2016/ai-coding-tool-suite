@@ -52,6 +52,21 @@ agent: build
 ---
 (stub) Build an artifact, verify it, and release.
 EOF
+# stub the release/retro commands so release-phase-gate is tested deterministically (not the heavy real commands)
+cat > "$APP/.opencode/commands/release.md" << 'EOF'
+---
+description: "(stub) release phase: build/verify/pre-review/deploy per RELEASE-PLAN.md."
+agent: build
+---
+(stub) Release to production.
+EOF
+cat > "$APP/.opencode/commands/retro.md" << 'EOF'
+---
+description: "(stub) retrospective phase: quantify the lifecycle."
+agent: build
+---
+(stub) Run a quantified retrospective.
+EOF
 
 # bilingual fixture pair used by the translation-gate / sync-translation tests
 mkdir -p "$APP/chinese" "$APP/english"

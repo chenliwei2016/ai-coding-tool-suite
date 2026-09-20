@@ -196,6 +196,33 @@ t40() { want t40 || return; echo "== t40 test-phase-gate: TEST pass allows /depl
   [ "$EXIT" -eq 0 ] && pass "t40 /deploy allowed (exit=0)" || fail "t40 /deploy blocked (exit=$EXIT)"
   reset_tree; rm -f "$PROJ/TEST.md"; }
 
+# release-phase-gate gates /retro, checking RELEASE-PLAN.md + RELEASE.md. Blocked => EXIT != 0.
+RG() { local c="$1" why="$2" planon="$3" rfx="$4"; want "$c" || return; echo "== $c release-phase-gate: $why =="
+  reset_tree; rm -f "$PROJ/RELEASE-PLAN.md" "$PROJ/RELEASE.md"; git -C "$PROJ" commit -aqm "clean" 2>/dev/null || true
+  [ "$planon" = "yes" ] && cp "./fixtures/RELEASE-PLAN.md" "$PROJ/RELEASE-PLAN.md"
+  [ "$rfx" != "IGNORE" ] && [ -f "./fixtures/$rfx" ] && cp "./fixtures/$rfx" "$PROJ/RELEASE.md"
+  oc --command retro "go"
+  [ "$EXIT" -ne 0 ] && pass "$c blocked (exit=$EXIT)" || fail "$c NOT blocked (exit=0)"
+  reset_tree; rm -f "$PROJ/RELEASE-PLAN.md" "$PROJ/RELEASE.md"; }
+
+t41(){ RG t41 "missing RELEASE-PLAN.md blocks" "no" "IGNORE"; }
+t42(){ RG t42 "deployed=no blocks" "yes" "RELEASE.nodeployed.md"; }
+t43(){ RG t43 "verified=no blocks" "yes" "RELEASE.noverified.md"; }
+t44(){ RG t44 "release not human-confirmed blocks" "yes" "RELEASE.noconfirm.md"; }
+
+t45() { want t45 || return; echo "== t45 release-phase-gate: env off bypass =="
+  reset_tree; rm -f "$PROJ/RELEASE-PLAN.md" "$PROJ/RELEASE.md"; git -C "$PROJ" commit -aqm "clean" 2>/dev/null || true
+  ENV_EXTRAS=(RELEASE_PHASE_GATE=off); oc --command retro "go past gate"
+  [ "$EXIT" -eq 0 ] && pass "t45 gate bypassed (exit=0)" || fail "t45 still blocked (exit=$EXIT)"
+  ENV_EXTRAS=(); reset_tree; rm -f "$PROJ/RELEASE-PLAN.md" "$PROJ/RELEASE.md"; }
+
+t46() { want t46 || return; echo "== t46 release-phase-gate: complete release allows /retro =="
+  reset_tree; rm -f "$PROJ/RELEASE-PLAN.md" "$PROJ/RELEASE.md"; git -C "$PROJ" commit -aqm "clean" 2>/dev/null || true
+  cp "./fixtures/RELEASE-PLAN.md" "$PROJ/RELEASE-PLAN.md"; cp "./fixtures/RELEASE.ok.md" "$PROJ/RELEASE.md"
+  oc --command retro "go"
+  [ "$EXIT" -eq 0 ] && pass "t46 /retro allowed (exit=0)" || fail "t46 /retro blocked (exit=$EXIT)"
+  reset_tree; rm -f "$PROJ/RELEASE-PLAN.md" "$PROJ/RELEASE.md"; }
+
 echo "== running suite against $PROJ (model: ${MODEL:-default}) =="
-t14; t01; t02; t03; t07; t08; t09; t10; t11; t12; t13; t04; t05; t06; t15; t16; t17; t18; t19; t20; t22; t23; t24; t25; t26; t27; t28; t29; t30; t31; t32; t33; t34; t35; t36; t37; t38; t39; t40
+t14; t01; t02; t03; t07; t08; t09; t10; t11; t12; t13; t04; t05; t06; t15; t16; t17; t18; t19; t20; t22; t23; t24; t25; t26; t27; t28; t29; t30; t31; t32; t33; t34; t35; t36; t37; t38; t39; t40; t41; t42; t43; t44; t45; t46
 echo "== done =="

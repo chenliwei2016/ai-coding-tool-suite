@@ -32,8 +32,14 @@ The target lifecycle (overview; later phases will be detailed progressively in f
    `reviewed`/`human_confirmed`. Thresholds reference the project-root `GATE-REQUIREMENTS.md`; defects flow
    into `issues.md`.)*
 6. **部署 (release)** — build artifact -> version-verification env -> pre-prod review -> production.
+   *(Implemented: `/release` command, `release-project` skill, `release-phase-gate.ts` / `RELEASE_PHASE_GATE`.
+   `RELEASE.md` is the deliverable (deployed state), hard-gated on `artifact`/`verified`/`prereviewed`/
+   `deployed`/`human_confirmed`. The four segments are **declarative** — concrete build/verify/deploy
+   commands come from the project-root `RELEASE-PLAN.md`, never hard-coded.)*
 7. **复盘 / 评估 (retrospective)** — optional but high-yield; the Deming/reflection cycle: retain what
-   worked, fix what didn't, feed into the next loop.
+   worked, fix what didn't, feed into the next loop. *(Implemented: `/retro` command, `retro-evaluate`
+   skill. `RETRO.md` is a **quantified metrics dashboard** per phase (code adoption rate, rework rate,
+   defect escape, cycle time, ...) with keep/improve feeding the next loop. Leaf node — no outgoing gate.)*
 
 Each phase ships its own `skill` + (gate/`command`) + where useful an `agent`/`plugin`, so it is
 reusable and independently gateable.
