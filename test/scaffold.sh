@@ -28,6 +28,14 @@ agent: build
 ---
 (stub) Produce an ordered, parallelizable plan from the design spec.
 EOF
+# stub the implementation-phase command so plan-phase-gate has something to intercept
+cat > "$APP/.opencode/commands/dev.md" << 'EOF'
+---
+description: "(stub) enter the implementation phase. Should be blocked until the plan phase (PLAN.md) is complete."
+agent: build
+---
+(stub) Implement the plan via feature-implementation.
+EOF
 
 # bilingual fixture pair used by the translation-gate / sync-translation tests
 mkdir -p "$APP/chinese" "$APP/english"

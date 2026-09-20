@@ -3,7 +3,7 @@ description: "进入『计划 (Plan)』阶段：把已确认的 DESIGN.md 拆解
 agent: build
 ---
 
-你是本阶段的执行者（build 徽章），执行「计划 (Plan)」。严格把**已确认的 `DESIGN.md`** 转成一份**有序、可并行**的实施计划，交付 `PLAN.md`。完成本阶段后进入「实现」阶段（由 `feature-implementation` 落地）。
+你是本阶段的执行者（build 徽章），执行「计划 (Plan)」。加载 `plan-project` 技能并按其流程执行。严格把**已确认的 `DESIGN.md`** 转成一份**有序、可并行**的实施计划，交付 `PLAN.md`。完成本阶段后进入「实现」阶段（由 `feature-implementation` 落地）。
 
 前置：`DESIGN.md` 必须已 `status: complete`、`human_confirmed: true`（`design-phase-gate` 会拦 `/plan`，不满足则先回 `design` 阶段）。
 

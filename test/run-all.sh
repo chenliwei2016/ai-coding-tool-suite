@@ -117,6 +117,33 @@ t22() { want t22 || return; echo "== t22 design-phase-gate: complete DESIGN allo
   [ "$EXIT" -eq 0 ] && pass "t22 /plan allowed (exit=0)" || fail "t22 /plan blocked (exit=$EXIT)"
   reset_tree; rm -f "$PROJ/DESIGN.md" "$PROJ/GATE_REQUIREMENTS.md"; }
 
+# plan-phase-gate gates /dev. Blocked => EXIT != 0.
+PG() { local c="$1" why="$2" dfx="$3" pfx="$4"; want "$c" || return; echo "== $c plan-phase-gate: $why =="
+  reset_tree; rm -f "$PROJ/DESIGN.md" "$PROJ/PLAN.md"; git -C "$PROJ" commit -aqm "clean" 2>/dev/null || true
+  [ "$dfx" != "IGNORE" ] && [ -f "./fixtures/$dfx" ] && cp "./fixtures/$dfx" "$PROJ/DESIGN.md"
+  [ "$pfx" != "IGNORE" ] && [ -f "./fixtures/$pfx" ] && cp "./fixtures/$pfx" "$PROJ/PLAN.md"
+  oc --command dev "go"
+  [ "$EXIT" -ne 0 ] && pass "$c blocked (exit=$EXIT)" || fail "$c NOT blocked (exit=0)"
+  reset_tree; rm -f "$PROJ/DESIGN.md" "$PROJ/PLAN.md"; }
+
+t23(){ PG t23 "missing PLAN.md blocks" "IGNORE" "IGNORE"; }
+t24(){ PG t24 "DESIGN not complete blocks" "DESIGN.nofield.md" "IGNORE"; }
+t25(){ PG t25 "PLAN status=draft blocks" "DESIGN.ok.md" "PLAN.draft.md"; }
+t26(){ PG t26 "PLAN reviewed=no blocks" "DESIGN.ok.md" "PLAN.nofield.md"; }
+
+t27() { want t27 || return; echo "== t27 plan-phase-gate: env off bypass =="
+  reset_tree; rm -f "$PROJ/DESIGN.md" "$PROJ/PLAN.md"; git -C "$PROJ" commit -aqm "clean" 2>/dev/null || true
+  ENV_EXTRAS=(PLAN_PHASE_GATE=off); oc --command dev "go past gate"
+  [ "$EXIT" -eq 0 ] && pass "t27 gate bypassed (exit=0)" || fail "t27 still blocked (exit=$EXIT)"
+  ENV_EXTRAS=(); reset_tree; rm -f "$PROJ/DESIGN.md" "$PROJ/PLAN.md"; }
+
+t28() { want t28 || return; echo "== t28 plan-phase-gate: complete PLAN + DESIGN allows /dev =="
+  reset_tree; rm -f "$PROJ/DESIGN.md" "$PROJ/PLAN.md"; git -C "$PROJ" commit -aqm "clean" 2>/dev/null || true
+  cp "./fixtures/DESIGN.ok.md" "$PROJ/DESIGN.md"; cp "./fixtures/PLAN.ok.md" "$PROJ/PLAN.md"
+  oc --command dev "go"
+  [ "$EXIT" -eq 0 ] && pass "t28 /dev allowed (exit=0)" || fail "t28 /dev blocked (exit=$EXIT)"
+  reset_tree; rm -f "$PROJ/DESIGN.md" "$PROJ/PLAN.md"; }
+
 echo "== running suite against $PROJ (model: ${MODEL:-default}) =="
-t14; t01; t02; t03; t07; t08; t09; t10; t11; t12; t13; t04; t05; t06; t15; t16; t17; t18; t19; t20; t22
+t14; t01; t02; t03; t07; t08; t09; t10; t11; t12; t13; t04; t05; t06; t15; t16; t17; t18; t19; t20; t22; t23; t24; t25; t26; t27; t28
 echo "== done =="

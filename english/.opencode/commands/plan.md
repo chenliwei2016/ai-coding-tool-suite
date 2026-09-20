@@ -3,7 +3,8 @@ description: "Enter the Plan phase: turn the confirmed DESIGN.md into an ordered
 agent: build
 ---
 
-You are the executor of this phase (build facade). Run **Plan**. Turn the **confirmed `DESIGN.md`** into an
+You are the executor of this phase (build facade). Run **Plan**. Load the `plan-project` skill and follow
+it. Turn the **confirmed `DESIGN.md`** into an
 **ordered, parallelizable** implementation plan and deliver `PLAN.md`. This completes the Plan phase; the
 next phase (Implementation) is executed via `feature-implementation`.
 

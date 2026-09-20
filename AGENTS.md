@@ -19,7 +19,9 @@ The target lifecycle (overview; later phases will be detailed progressively in f
    `/design` command, `design-and-spec` skill, `design-phase-gate.ts` / `DESIGN_PHASE_GATE`. Inputs:
    `PROJECT-REVIEW.md` (from phase 1) + inline requirements gated by project-root `GATE_REQUIREMENTS.md`;
    `DESIGN.md` is the deliverable, hard-gated on `reviewed`, `requirements_sign_off`, `human_confirmed`.)*
-3. **计划** — prioritize the spec into an ordered, parallelizable plan.
+3. **计划** — prioritize the spec into an ordered, parallelizable plan. *(Implemented: `/plan` command,
+   `plan-project` skill, `plan-phase-gate.ts` / `PLAN_PHASE_GATE`; `PLAN.md` is the deliverable, hard-gated
+   on `reviewed`, `human_confirmed`, with `DESIGN.md` as required input.)*
 4. **开发** — spec -> code; unit tests; code review.
 5. **测试** — functional (black-box), performance, security, test review; defects flow back to design.
 6. **部署 (release)** — build artifact -> version-verification env -> pre-prod review -> production.
